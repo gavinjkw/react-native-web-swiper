@@ -198,48 +198,6 @@ export default class DefaultControls extends React.Component {
   }
 }
 
-DefaultControls.propTypes = {
-  cellsStyle: PropTypes.shape(
-    cellPositions.reduce(
-      (obj, item) => ({ ...obj, [item]: ViewPropTypes.style }),
-      {}
-    )
-  ),
-  cellsContent: PropTypes.shape(
-    cellPositions.reduce((obj, item) => ({ ...obj, [item]: any }), {})
-  ),
-
-  dotsPos: PropTypes.oneOf([...cellPositions, true, false]),
-  prevPos: PropTypes.oneOf([...cellPositions, true, false]),
-  nextPos: PropTypes.oneOf([...cellPositions, true, false]),
-  prevTitle: PropTypes.string,
-  nextTitle: PropTypes.string,
-
-  dotsTouchable: PropTypes.bool,
-  dotsWrapperStyle: ViewPropTypes.style,
-
-  dotProps: PropTypes.shape(Badge.propTypes),
-  dotActiveStyle: ViewPropTypes.style,
-  DotComponent: PropTypes.func,
-
-  prevTitleStyle: Text.propTypes.style,
-  nextTitleStyle: Text.propTypes.style,
-  PrevComponent: PropTypes.func,
-  NextComponent: PropTypes.func,
-  firstPrevElement: any,
-  lastNextElement: any,
-
-  theme: PropTypes.object,
-  vertical: PropTypes.bool,
-  count: PropTypes.number,
-  activeIndex: PropTypes.number,
-  isFirst: PropTypes.bool,
-  isLast: PropTypes.bool,
-  goToPrev: PropTypes.func,
-  goToNext: PropTypes.func,
-  goTo: PropTypes.func
-};
-
 DefaultControls.defaultProps = {
   prevTitle: "Prev",
   nextTitle: "Next"
