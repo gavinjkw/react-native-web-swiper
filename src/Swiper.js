@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Animated, PanResponder, StyleSheet, View, ViewPropTypes } from 'react-native';
+import React from "react";
+import PropTypes from "prop-types";
+import { Animated, PanResponder, StyleSheet, View } from "react-native";
 
-import DefaultControls from './Controls';
+import DefaultControls from "./Controls";
 
 const useNativeDriver = false; // because of RN #13377
 
@@ -72,7 +72,7 @@ class Swiper extends React.Component {
       width: 0,
       height: 0,
       activeIndex: props.from,
-      pan: new Animated.ValueXY(),
+      pan: new Animated.ValueXY()
     };
 
     this._animatedValueX = 0;
@@ -122,7 +122,7 @@ class Swiper extends React.Component {
         null,
         this.props.vertical
           ? { dy: this.state.pan.y }
-          : { dx: this.state.pan.x },
+          : { dx: this.state.pan.x }
       ]),
       onPanResponderRelease: (e, gesture) => {
         const { vertical, minDistanceForAction } = this.props;
@@ -142,7 +142,7 @@ class Swiper extends React.Component {
         } else {
           this._changeIndex(correction > 0 ? -1 : 1);
         }
-      },
+      }
     };
   }
 
@@ -152,7 +152,7 @@ class Swiper extends React.Component {
     Animated.spring(this.state.pan, {
       ...springConfig,
       toValue,
-      useNativeDriver, // false, see top of file
+      useNativeDriver // false, see top of file
     }).start(() => onAnimationEnd && onAnimationEnd(activeIndex));
   }
 
@@ -163,7 +163,7 @@ class Swiper extends React.Component {
     this._animatedValueY = vertical ? height * activeIndex * -1 : 0;
     this.state.pan.setOffset({
       x: this._animatedValueX,
-      y: this._animatedValueY,
+      y: this._animatedValueY
     });
     this.state.pan.setValue({ x: 0, y: 0 });
   }
@@ -213,8 +213,8 @@ class Swiper extends React.Component {
 
   _onLayout({
     nativeEvent: {
-      layout: { x, y, width, height },
-    },
+      layout: { x, y, width, height }
+    }
   }) {
     this.setState({ x, y, width, height }, () => this._fixState());
   }
@@ -233,7 +233,7 @@ class Swiper extends React.Component {
       slideWrapperStyle,
       controlsEnabled,
       controlsProps,
-      Controls = DefaultControls,
+      Controls = DefaultControls
     } = this.props;
 
     return (
@@ -244,7 +244,7 @@ class Swiper extends React.Component {
         <View
           style={StyleSheet.flatten([
             styles.container(positionFixed, x, y, width, height),
-            innerContainerStyle,
+            innerContainerStyle
           ])}
         >
           <Animated.View
@@ -252,8 +252,8 @@ class Swiper extends React.Component {
               styles.swipeArea(vertical, this.count, width, height),
               swipeAreaStyle,
               {
-                transform: [{ translateX: pan.x }, { translateY: pan.y }],
-              },
+                transform: [{ translateX: pan.x }, { translateY: pan.y }]
+              }
             ])}
             {...this._panResponder.panHandlers}
           >
@@ -262,7 +262,7 @@ class Swiper extends React.Component {
                 key={i}
                 style={StyleSheet.flatten([
                   { width, height },
-                  slideWrapperStyle,
+                  slideWrapperStyle
                 ])}
               >
                 {el}
@@ -289,33 +289,6 @@ class Swiper extends React.Component {
   }
 }
 
-Swiper.propTypes = {
-  vertical: PropTypes.bool,
-  from: PropTypes.number,
-  loop: PropTypes.bool,
-  timeout: PropTypes.number,
-  gesturesEnabled: PropTypes.func,
-  springConfig: PropTypes.object,
-  minDistanceToCapture: PropTypes.number, // inside ScrollView
-  minDistanceForAction: PropTypes.number,
-
-  onAnimationStart: PropTypes.func,
-  onAnimationEnd: PropTypes.func,
-  onIndexChanged: PropTypes.func,
-
-  positionFixed: PropTypes.bool, // Fix safari vertical bounces
-  containerStyle: ViewPropTypes.style,
-  innerContainerStyle: ViewPropTypes.style,
-  swipeAreaStyle: ViewPropTypes.style,
-  slideWrapperStyle: ViewPropTypes.style,
-
-  controlsEnabled: PropTypes.bool,
-  controlsProps: PropTypes.shape(DefaultControls.propTypes),
-  Controls: PropTypes.func,
-
-  theme: PropTypes.object,
-};
-
 Swiper.defaultProps = {
   vertical: false,
   from: 0,
@@ -325,34 +298,34 @@ Swiper.defaultProps = {
   minDistanceToCapture: 5,
   minDistanceForAction: 0.2,
   positionFixed: false,
-  controlsEnabled: true,
+  controlsEnabled: true
 };
 
 const styles = {
   root: {
     flex: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent"
   },
   // Fix web vertical scaling (like expo v33-34)
   container: (positionFixed, x, y, width, height) => ({
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     // Fix safari vertical bounces
-    position: positionFixed ? 'fixed' : 'relative',
-    overflow: 'hidden',
+    position: positionFixed ? "fixed" : "relative",
+    overflow: "hidden",
     top: positionFixed ? y : 0,
     left: positionFixed ? x : 0,
     width,
     height,
-    justifyContent: 'space-between',
+    justifyContent: "space-between"
   }),
   swipeArea: (vertical, count, width, height) => ({
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     width: vertical ? width : width * count,
     height: vertical ? height * count : height,
-    flexDirection: vertical ? 'column' : 'row',
-  }),
+    flexDirection: vertical ? "column" : "row"
+  })
 };
 
 export { Swiper };

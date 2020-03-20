@@ -1,32 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { StyleSheet, Text, View, ViewPropTypes } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-import { nodeType } from './nodeType';
-import { renderNode } from './renderNode';
+import { renderNode } from "./renderNode";
 
-import { Badge } from './Badge';
-import { Button } from './Button';
+import { Badge } from "./Badge";
+import { Button } from "./Button";
 
-import colors from './colors';
+import colors from "./colors";
 
 const cellPositions = [
-  'top-left',
-  'top',
-  'top-right',
-  'left',
-  'center',
-  'right',
-  'bottom-left',
-  'bottom',
-  'bottom-right',
+  "top-left",
+  "top",
+  "top-right",
+  "left",
+  "center",
+  "right",
+  "bottom-left",
+  "bottom",
+  "bottom-right"
 ];
 
 export default class DefaultControls extends React.Component {
-  dotsPos = (() => this._getPos(this.props.dotsPos, 'bottom', 'right'))();
+  dotsPos = (() => this._getPos(this.props.dotsPos, "bottom", "right"))();
   prevPos = (() =>
-    this._getPos(this.props.prevPos, 'bottom-left', 'top-right'))();
-  nextPos = (() => this._getPos(this.props.nextPos, 'bottom-right'))();
+    this._getPos(this.props.prevPos, "bottom-left", "top-right"))();
+  nextPos = (() => this._getPos(this.props.nextPos, "bottom-right"))();
 
   constructor(props) {
     super(props);
@@ -55,12 +53,12 @@ export default class DefaultControls extends React.Component {
         theme={{ colors }}
         containerStyle={StyleSheet.flatten([
           styles.dotsItemContainer,
-          containerStyle,
+          containerStyle
         ])}
         badgeStyle={StyleSheet.flatten([
           styles.dotsItem({ colors }, isActive),
           badgeStyle,
-          isActive && dotActiveStyle,
+          isActive && dotActiveStyle
         ])}
         onPress={onPress}
         {...others}
@@ -76,13 +74,13 @@ export default class DefaultControls extends React.Component {
       dotsTouchable,
       dotsWrapperStyle,
       DotComponent = this._renderDot,
-      goTo,
+      goTo
     } = this.props;
     return (
       <View
         style={StyleSheet.flatten([
           styles.dotsWrapper(vertical),
-          dotsWrapperStyle,
+          dotsWrapperStyle
         ])}
       >
         {Array.from({ length: count }, (v, i) => i).map(index => (
@@ -104,7 +102,10 @@ export default class DefaultControls extends React.Component {
         type="clear"
         onPress={onPress}
         title={title}
-        titleStyle={StyleSheet.flatten([styles.buttonTitleStyle({ colors }, type), titleStyle])}
+        titleStyle={StyleSheet.flatten([
+          styles.buttonTitleStyle({ colors }, type),
+          titleStyle
+        ])}
         {...props}
       />
     );
@@ -117,7 +118,7 @@ export default class DefaultControls extends React.Component {
       prevTitle,
       firstPrevElement,
       prevTitleStyle,
-      PrevComponent = this._renderButton,
+      PrevComponent = this._renderButton
     } = this.props;
     if (isFirst) {
       return renderNode(Text, firstPrevElement);
@@ -139,7 +140,7 @@ export default class DefaultControls extends React.Component {
       nextTitle,
       lastNextElement,
       nextTitleStyle,
-      NextComponent = this._renderButton,
+      NextComponent = this._renderButton
     } = this.props;
     if (isLast) {
       return renderNode(Text, lastNextElement);
@@ -169,11 +170,11 @@ export default class DefaultControls extends React.Component {
   _renderRow({ rowAlign }) {
     const Cell = this._renderCell;
     const row = [
-      `${!rowAlign ? '' : rowAlign + '-'}left`,
-      rowAlign || 'center',
-      `${!rowAlign ? '' : rowAlign + '-'}right`,
+      `${!rowAlign ? "" : rowAlign + "-"}left`,
+      rowAlign || "center",
+      `${!rowAlign ? "" : rowAlign + "-"}right`
     ];
-    const alignItems = ['flex-start', 'center', 'flex-end'];
+    const alignItems = ["flex-start", "center", "flex-end"];
     return (
       <View style={styles.row}>
         {row.map((name, index) => (
@@ -205,7 +206,7 @@ DefaultControls.propTypes = {
     )
   ),
   cellsContent: PropTypes.shape(
-    cellPositions.reduce((obj, item) => ({ ...obj, [item]: nodeType }), {})
+    cellPositions.reduce((obj, item) => ({ ...obj, [item]: any }), {})
   ),
 
   dotsPos: PropTypes.oneOf([...cellPositions, true, false]),
@@ -225,8 +226,8 @@ DefaultControls.propTypes = {
   nextTitleStyle: Text.propTypes.style,
   PrevComponent: PropTypes.func,
   NextComponent: PropTypes.func,
-  firstPrevElement: nodeType,
-  lastNextElement: nodeType,
+  firstPrevElement: any,
+  lastNextElement: any,
 
   theme: PropTypes.object,
   vertical: PropTypes.bool,
@@ -236,50 +237,50 @@ DefaultControls.propTypes = {
   isLast: PropTypes.bool,
   goToPrev: PropTypes.func,
   goToNext: PropTypes.func,
-  goTo: PropTypes.func,
+  goTo: PropTypes.func
 };
 
 DefaultControls.defaultProps = {
-  prevTitle: 'Prev',
-  nextTitle: 'Next',
+  prevTitle: "Prev",
+  nextTitle: "Next"
 };
 
 const styles = {
   row: {
-    flexDirection: 'row',
+    flexDirection: "row",
     height: 0,
-    alignItems: 'center',
-    margin: 20,
+    alignItems: "center",
+    margin: 20
   },
   spaceHolder: alignItems => ({
     height: 0,
     flex: 1,
     alignItems,
-    justifyContent: 'center',
+    justifyContent: "center"
   }),
   cell: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute"
   },
   dotsWrapper: vertical => ({
-    flexDirection: vertical ? 'column' : 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: vertical ? "column" : "row",
+    alignItems: "center",
+    justifyContent: "center",
     minWidth: 1,
-    minHeight: 1,
+    minHeight: 1
   }),
   dotsItemContainer: {
-    margin: 3,
+    margin: 3
   },
   dotsItem: (theme, isActive) => ({
     backgroundColor: isActive ? theme.colors.primary : theme.colors.grey3,
-    borderColor: 'transparent',
+    borderColor: "transparent"
   }),
   buttonTitleStyle: (theme, type) => ({
-    color: type === 'prev' ? theme.colors.grey3 : theme.colors.primary,
+    color: type === "prev" ? theme.colors.grey3 : theme.colors.primary
   }),
   hidden: {
-    opacity: 0,
-  },
+    opacity: 0
+  }
 };
